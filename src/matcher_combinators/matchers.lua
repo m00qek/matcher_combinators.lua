@@ -1,4 +1,5 @@
 local base = require('matcher_combinators.matchers.base')
+local value = require("matcher_combinators.matchers.value")
 
 local matchers = {}
 
@@ -18,7 +19,7 @@ function matchers.predicate(fn, message)
          return actual
       end
 
-      return base.failure({error = message, actual = actual })
+      return value.failure({error = message, actual = actual })
    end
 end
 

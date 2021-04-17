@@ -1,4 +1,5 @@
 local base = require('matcher_combinators.matchers.base')
+local value = require("matcher_combinators.matchers.value")
 
 local boolean = {}
 
@@ -12,7 +13,7 @@ function boolean.truthy()
          return actual
       end
 
-      return base.failure({ actual = actual })
+      return value.failure({ actual = actual })
    end
 end
 
@@ -22,7 +23,7 @@ function boolean.falsey()
          return actual
       end
 
-      return base.failure({ actual = actual })
+      return value.failure({ actual = actual })
    end
 end
 

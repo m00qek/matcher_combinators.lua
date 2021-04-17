@@ -1,6 +1,6 @@
 local matcher_combinators = require('matcher_combinators')
 local diff = require('matcher_combinators.printers.diff')
-local base = require('matcher_combinators.matchers.base')
+local value = require('matcher_combinators.matchers.value')
 
 local assert = require("luassert")
 local say = require("say")
@@ -22,9 +22,9 @@ assert:register(
    "assertion.combinators.match.positive",
    "assertion.combinators.match.negative")
 
-assert:add_formatter(function(value)
-   if base.is_failure(value) or base.has_failure(value) then
-      return diff.pprint(value)
+assert:add_formatter(function(object)
+   if not value.is_match(object) then
+      return diff.pprint(object)
    end
 end)
 

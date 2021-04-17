@@ -1,14 +1,14 @@
-local base = require('matcher_combinators.matchers.base')
+local value = require("matcher_combinators.matchers.value")
 
 local table = {}
 
 local function entry(raw, matcher, actual)
    if not matcher then
-      return base.unexpected(actual)
+      return value.unexpected(actual)
    end
 
    if not actual then
-      return base.missing(raw or matcher)
+      return value.missing(raw or matcher)
    end
 
    return matcher(actual)
@@ -19,17 +19,17 @@ function table.contains(expected, raw)
       local newtable = {}
 
       if type(actual) ~= 'table' then
-         return base.mismatch(raw or expected, actual)
+         return value.mismatch(raw or expected, actual)
       end
 
       local matched = true
       for key, matcher in pairs(expected) do
          newtable[key] = entry(raw[key], matcher, actual[key])
-         matched = matched and base.matched(newtable[key])
+         matched = matched and value.is_match(newtable[key])
       end
 
       if not matched then
-         return base.mismatched(newtable)
+         return value.with_failures(newtable)
       end
 
       return actual

@@ -1,15 +1,16 @@
-local base = require('matcher_combinators.matchers.base')
+local value = require("matcher_combinators.matchers.value")
+
 local utils = require('matcher_combinators.utils')
 
 local array = {}
 
 local function element(raw, matcher, actual)
    if not matcher then
-      return base.unexpected(actual)
+      return value.unexpected(actual)
    end
 
    if not actual then
-      return base.missing(raw or matcher)
+      return value.missing(raw or matcher)
    end
 
    return matcher(actual)
@@ -21,22 +22,22 @@ function array.starts_with(expected, raw)
       local matched = true
 
       if not utils.is_array(actual) then
-         return base.mismatch(raw or expected, actual)
+         return value.mismatch(raw or expected, actual)
       end
 
       for index = 1, #expected do
-         local value = element(raw[index], expected[index], actual[index])
+         local object = element(raw[index], expected[index], actual[index])
 
-         newarray[index] = value
-         if base.matched(value) then
-            newarray[index] = base.keep(value)
+         newarray[index] = object
+         if value.is_match(object) then
+            newarray[index] = value.keep(object)
          end
 
-         matched = matched and base.matched(value)
+         matched = matched and value.is_match(object)
       end
 
       if not matched then
-         return base.mismatched(newarray)
+         return value.with_failures(newarray)
       end
 
       return actual

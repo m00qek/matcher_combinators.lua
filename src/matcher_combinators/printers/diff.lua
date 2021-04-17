@@ -1,4 +1,4 @@
-local base = require('matcher_combinators.matchers.base')
+local value = require('matcher_combinators.matchers.value')
 local colors = require('matcher_combinators.printers.colors')
 local indent = require('matcher_combinators.printers.indent')
 local table = require('matcher_combinators.printers.table')
@@ -17,38 +17,38 @@ pprint_failure = function(failure, options)
    })
 
    if failure.missing or failure.unexpected then
-      return colors.red(table.pprint(failure, failure_options, true, function(key, value, _)
+      return colors.red(table.pprint(failure, failure_options, true, function(k, v, _)
          return
-            table.pprint_key(key:upper()),
-            pprint_value(value, failure_options)
+            table.pprint_key(k:upper()),
+            pprint_value(v, failure_options)
       end))
    end
 
-   return table.pprint(failure, options, false, function(key, value, _)
-      if key == 'expected' then
+   return table.pprint(failure, options, false, function(k, v, _)
+      if k == 'expected' then
          return
-            table.pprint_key(key:upper()),
-            colors.yellow(pprint_value(value, failure_options))
+            table.pprint_key(k:upper()),
+            colors.yellow(pprint_value(v, failure_options))
       end
 
       return
-         table.pprint_key(key:upper()),
-         colors.red(pprint_value(value, failure_options))
+         table.pprint_key(k:upper()),
+         colors.red(pprint_value(v, failure_options))
    end)
 end
 
 pprint_value = function (object, options)
    if utils.is_array(object) then
-      return table.pprint(object, options, true, function(_, value, inner_options)
-         return pprint(value, inner_options)
+      return table.pprint(object, options, true, function(_, v, inner_options)
+         return pprint(v, inner_options)
       end)
    end
 
    if utils.is_table(object) then
-      return table.pprint(object, options, false, function(key, value, inner_options)
-         local printed = pprint(value, inner_options)
+      return table.pprint(object, options, false, function(k, v, inner_options)
+         local printed = pprint(v, inner_options)
          if printed then
-            return table.pprint_key(key), printed
+            return table.pprint_key(k), printed
          end
       end)
    end
@@ -61,12 +61,12 @@ pprint_value = function (object, options)
 end
 
 pprint = function(object, options)
-   if base.is_failure(object) then
-      return pprint_failure(base.value(object), options)
+   if value.is_failure(object) then
+      return pprint_failure(value.get(object), options)
    end
 
-   if base.has_failure(object) or base.should_keep(object) then
-      return pprint_value(base.value(object), options)
+   if value.has_failure(object) or value.should_keep(object) then
+      return pprint_value(value.get(object), options)
    end
 
    if options.with_matches then

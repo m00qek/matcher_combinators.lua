@@ -1,7 +1,7 @@
 local v = {}
 
 local KEYS = {
-   mismatched = 'matcher_combinators/mismatched',
+   with_failures = 'matcher_combinators/with_failures',
    failure    = 'matcher_combinators/failure',
    keep       = 'matcher_combinators/keep',
 }
@@ -10,8 +10,8 @@ function v.failure(value)
    return { [KEYS.failure] = value }
 end
 
-function v.mismatched(value)
-   return { [KEYS.mismatched] = value }
+function v.with_failures(value)
+   return { [KEYS.with_failures] = value }
 end
 
 function v.keep(value)
@@ -44,15 +44,15 @@ end
 
 -- predicates
 function v.has_failure(value)
-   return type(value) == 'table' and value[KEYS.mismatched]
+   return type(value) == 'table' and value[KEYS.with_failures] ~= nil
 end
 
 function v.is_failure(value)
-   return type(value) == 'table' and value[KEYS.failure]
+   return type(value) == 'table' and value[KEYS.failure] ~= nil
 end
 
 function v.should_keep(value)
-   return type(value) == 'table' and value[KEYS.keep]
+   return type(value) == 'table' and value[KEYS.keep] ~= nil
 end
 
 function v.is_match(value)

@@ -1,4 +1,4 @@
-local base = require('matcher_combinators.matchers.base')
+local value = require('matcher_combinators.matchers.value')
 local boolean = require('matcher_combinators.matchers.boolean')
 local string = require('matcher_combinators.matchers.string')
 local number = require('matcher_combinators.matchers.number')
@@ -44,7 +44,7 @@ function matcher_combinators.match(expected, actual, default_matchers)
    local matcher = matcher_combinators.matcher(expected, default_matchers)
 
    local result = matcher(actual)
-   local matched = base.matched(result)
+   local matched = value.is_match(result)
 
    return matched, matched or result
 end
