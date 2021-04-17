@@ -18,7 +18,8 @@ function utils.is_array(value)
 end
 
 function utils.is_table(value)
-   return type(value) == 'table' and not utils.is_array(value)
+   return type(value) == 'table'
+      and (next(value) == nil or not utils.is_array(value))
 end
 
 return utils

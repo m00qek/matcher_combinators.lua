@@ -19,6 +19,12 @@ local with_failures = value.with_failures
 
 
 describe("[equals]", function()
+   it("when trying to compare to a value that is not an array", function()
+      assert.are.same(
+         array.equals({ n(1), n(2) })("something"),
+         mismatch({ n(1), n(2) }, "something"))
+   end)
+
    it("when values are equals", function()
       assert_success(array.equals({ n(1), n(2), n(3) }), { 1, 2, 3 })
    end)
@@ -67,6 +73,12 @@ describe("[equals]", function()
 end)
 
 describe("[starts_with]", function()
+   it("when trying to compare to a value that is not an array", function()
+      assert.are.same(
+         array.starts_with({ n(1), n(2) })("something"),
+         mismatch({ n(1), n(2) }, "something"))
+   end)
+
    it("when actual is equal expected", function()
       assert_success(array.starts_with({ n(1), n(2) }), { 1, 2 })
    end)

@@ -17,6 +17,16 @@ local function entry(matcher, actual)
    return matcher(actual)
 end
 
+function table.absent()
+   return base.matcher(function(actual)
+      if actual == nil then
+         return actual
+      end
+
+      return value.unexpected(actual)
+   end, { name = 'key.absent' })
+end
+
 function table.contains(expected, raw)
    return base.matcher(function(actual)
       local newtable = {}
