@@ -33,7 +33,7 @@ describe("[equals]", function()
 
    it("when it has missing values", function()
       assert.are.same(
-         with_failures({ keep(1), keep(2), missing(3) }),
+         with_failures({ keep(1), keep(2), missing(n(3)) }),
          matcher({ 1, 2 }))
    end)
 
@@ -67,7 +67,7 @@ describe("[equals]", function()
          matcher({ 1, 2, 9, 8}))
 
       assert.are.same(
-         with_failures({ keep(1), mismatch(2, 9), missing(3) }),
+         with_failures({ keep(1), mismatch(2, 9), missing(n(3)) }),
          matcher({ 1, 9 }))
    end)
 end)
@@ -91,7 +91,7 @@ describe("[starts_with]", function()
 
    it("when it has missing values", function()
       assert.are.same(
-         with_failures({ keep(1), missing(2) }),
+         with_failures({ keep(1), missing(n(2)) }),
          matcher({ 1 }))
    end)
 

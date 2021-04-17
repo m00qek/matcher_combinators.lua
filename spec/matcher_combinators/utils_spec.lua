@@ -1,3 +1,4 @@
+local base = require('matcher_combinators.matchers.base')
 local utils = require('matcher_combinators.utils')
 
 describe("[is_array]", function()
@@ -23,5 +24,17 @@ describe("[is_table]", function()
       assert.is.False(utils.is_table(1))
       assert.is.False(utils.is_table("text"))
       assert.is.False(utils.is_table({ 1, 2, 3 }))
+   end)
+end)
+
+describe("[is_matcher]", function()
+   it('when the value is indeed a matcher', function()
+      assert.is.True(utils.is_matcher(base.equals('equals', 2)))
+   end)
+
+   it('when the value is NOT a matcher', function()
+      assert.is.False(utils.is_matcher({ a = 1 }))
+      assert.is.False(utils.is_matcher({ 1, 2 }))
+      assert.is.False(utils.is_matcher({ }))
    end)
 end)

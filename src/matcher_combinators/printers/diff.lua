@@ -38,6 +38,10 @@ pprint_failure = function(failure, options)
 end
 
 pprint_value = function (object, options)
+   if utils.is_matcher(object) then
+      return pprint_value(object.expected or tostring(object), options)
+   end
+
    if utils.is_array(object) then
       return table.pprint(object, options, true, function(_, v, inner_options)
          return pprint(v, inner_options)

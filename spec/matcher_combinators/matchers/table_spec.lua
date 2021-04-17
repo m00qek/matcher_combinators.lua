@@ -31,11 +31,11 @@ describe("[contains]", function()
 
    it("it lacks some keys", function()
       assert.are.same(
-         with_failures({ a = 1, b = missing(2) }),
+         with_failures({ a = 1, b = missing(n(2)) }),
          table.contains({ a = n(1), b = n(2) })({ a = 1 }))
 
       assert.are.same(
-         with_failures({ a = missing(1), b = missing(2) }),
+         with_failures({ a = missing(n(1)), b = missing(n(2)) }),
          table.contains({ a = n(1), b = n(2) })({ }))
    end)
 

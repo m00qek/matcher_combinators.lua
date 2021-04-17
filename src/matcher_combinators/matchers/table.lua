@@ -11,7 +11,7 @@ local function entry(matcher, actual)
    end
 
    if not actual then
-      return value.missing(base.expected(matcher))
+      return value.missing(matcher)
    end
 
    return matcher(actual)
@@ -27,12 +27,12 @@ function table.absent()
    end, { name = 'key.absent' })
 end
 
-function table.contains(expected, raw)
+function table.contains(expected)
    return base.matcher(function(actual)
-      local newtable = {}
+      local newtable = { }
 
       if not utils.is_table(actual) then
-         return value.mismatch(raw or expected, actual)
+         return value.mismatch(expected, actual)
       end
 
       local matched = true
@@ -46,7 +46,7 @@ function table.contains(expected, raw)
       end
 
       return actual
-   end, { name = 'table.contains', expected = raw or expected })
+   end, { name = 'table.contains', expected = expected })
 end
 
 return table

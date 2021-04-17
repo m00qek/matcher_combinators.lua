@@ -11,7 +11,7 @@ local function element(matcher, actual)
    end
 
    if not actual then
-      return value.missing(base.expected(matcher))
+      return value.missing(matcher)
    end
 
    return matcher(actual)
@@ -23,7 +23,7 @@ function array.equals(expected, raw)
       local matched = true
 
       if not utils.is_array(actual) then
-         return value.mismatch(raw or expected, actual)
+         return value.mismatch(expected, actual)
       end
 
       local index = 1
@@ -53,16 +53,16 @@ function array.equals(expected, raw)
       end
 
       return actual
-   end, { name = 'array.starts_with', expected = raw or expected })
+   end, { name = 'array.contains', expected = expected })
 end
 
-function array.starts_with(expected, raw)
+function array.starts_with(expected)
    return base.matcher(function(actual)
       local newarray = {}
       local matched = true
 
       if not utils.is_array(actual) then
-         return value.mismatch(raw or expected, actual)
+         return value.mismatch(expected, actual)
       end
 
       for index = 1, #expected do
@@ -81,7 +81,7 @@ function array.starts_with(expected, raw)
       end
 
       return actual
-   end, { name = 'array.starts_with', expected = raw or expected })
+   end, { name = 'array.starts_with', expected = expected })
 end
 
 return array
