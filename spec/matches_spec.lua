@@ -14,7 +14,7 @@ describe("sum", function()
       local v = m.matcher({ a = 1, b = { c = 2}, d = { 'A', 'B' } })
 --      assert.are.equals(v({        b = 1,        d = { "A" } })['matcher_combinators/mismatched'], 1)
       assert.combinators.match({ a = 1, b = { c = 2}, d = { 'A', 'B' } },
-                   {        b = 1,        d = { "A" } })
+                   {        b = 1,        d = { "A", "B", "C" } })
    end)
 end)
 

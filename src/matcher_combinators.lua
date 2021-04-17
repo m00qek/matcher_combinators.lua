@@ -13,7 +13,7 @@ local DEFAULT_MATCHERS = {
    string  = string.equals,
    number  = number.equals,
    table   = table.contains,
-   array   = array.starts_with,
+   array   = array.equals,
 }
 
 local function resolve(object, matchers)
@@ -27,8 +27,8 @@ local function resolve(object, matchers)
 
    if utils.is_table(object) then
       local expected = {}
-      for key, value in pairs(object) do
-         expected[key] = resolve(value, matchers)
+      for k, v in pairs(object) do
+         expected[k] = resolve(v, matchers)
       end
       return matchers.table(expected, object)
    end
