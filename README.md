@@ -7,7 +7,7 @@ Test library for asserting deeply nested data structures
 Add it using [LuaRocks][luarocks] in the `test_dependencies` entry:
 
 ```lua
-test_dependencies = { "busted", "luacheck", "matcher_combinators.lua" }
+test_dependencies = { "busted", "luacheck", "matcher_combinators" }
 ```
 ## Using 
 
@@ -80,6 +80,9 @@ local is_natural = base.matcher(function(actual)
 end, { name = 'number.is_natural' })
 ```
 
+** inspired by [matcher-combinators][mc]**
+
 [issues]: https://github.com/m00qek/matcher_combinators.lua/issues
 [luarocks]: https://luarocks.org/
 [failure]: ./failure.png
+[mc]: https://github.com/nubank/matcher-combinators
