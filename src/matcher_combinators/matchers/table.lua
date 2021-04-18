@@ -1,17 +1,8 @@
 local base = require("matcher_combinators.matchers.base")
 local value = require("matcher_combinators.matchers.value")
+local resolver = require("matcher_combinators.resolver")
 
 local utils = require("matcher_combinators.utils")
-
-local function resolve(expected)
-   return function(resolverfn)
-      local resolved = { }
-      for k, v in pairs(expected) do
-         resolved[k] = resolverfn(v)
-      end
-      return resolved
-   end
-end
 
 local function entry(matcher, actual)
    if not matcher then
@@ -50,7 +41,7 @@ local tbl = {}
 function tbl.contains(expected)
    return base.matcher(contains, {
       expected = expected,
-      resolver = resolve(expected),
+      resolver = resolver.table,
       name     = "table.contains",
    })
 end

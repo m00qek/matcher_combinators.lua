@@ -2,38 +2,34 @@ local value = require("matcher_combinators.matchers.value")
 
 local base = {}
 
-local function with_resolver(matchfn, resolver, meta)
-   return function(resolvefn)
-      local expected = resolver(resolvefn)
-
-      return base.matcher(function(actual)
-         return matchfn(actual, expected)
-      end, { name = meta.name, expected = meta.expected })
-   end
-end
-
-function base.matcher(fn, meta)
+function base.matcher(matchfn, meta)
    local matcher = {
       expected = meta.expected,
    }
 
-   local resolver = function(_) return matcher end
+   local resolver = function(_, _) return matcher end
    if meta.resolver then
-      resolver = with_resolver(fn, meta.resolver, meta)
+      resolver = function(object, matchers)
+         local expected = meta.resolver(object, matchers)
+
+         return base.matcher(
+            function(actual) return matchfn(actual, expected) end,
+            { name = meta.name, expected = expected })
+      end
    end
 
    setmetatable(matcher, {
       kind = "matcher_combinators/matcher",
-      resolver = resolver,
-      __call = function(self, actual) return fn(actual, self.expected) end,
-      __name = "matcher(" .. (meta.name or tostring(fn)) .. ")",
+      resolve = resolver,
+      __call = function(self, actual) return matchfn(actual, self.expected) end,
+      __name = "matcher(" .. (meta.name or tostring(matchfn)) .. ")",
    })
 
    return matcher
 end
 
-function base.resolve(matcher, resolverfn)
-   return getmetatable(matcher).resolver(resolverfn)
+function base.resolve(matcher, default_matchers)
+   return getmetatable(matcher).resolve(matcher.expected, default_matchers)
 end
 
 function base.equals(name, expected)

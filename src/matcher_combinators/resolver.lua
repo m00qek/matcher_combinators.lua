@@ -1,29 +1,20 @@
 local base = require("matcher_combinators.matchers.base")
+
 local utils = require("matcher_combinators.utils")
 
 local resolver = {}
 
-function resolver.resolve(object, matchers)
+function resolver.matcher(object, matchers)
    if utils.is_array(object) then
-      local expected = { }
-      for index = 1, #object do
-         expected[index] = resolver.resolve(object[index], matchers)
-      end
-      return matchers.array(expected)
+      return matchers.array(resolver.array(object, matchers))
    end
 
    if utils.is_table(object) then
-      local expected = { }
-      for k, v in pairs(object) do
-         expected[k] = resolver.resolve(v, matchers)
-      end
-      return matchers.table(expected)
+      return matchers.table(resolver.table(object, matchers))
    end
 
    if utils.is_matcher(object) then
-      return base.resolve(object, function(obj)
-         return resolver.resolve(obj, matchers)
-      end)
+      return base.resolve(object, matchers)
    end
 
    local matcher = matchers[type(object)]
@@ -32,6 +23,22 @@ function resolver.resolve(object, matchers)
    end
 
    return base.equals('general_equals', object)
+end
+
+function resolver.table(expected, matchers)
+   local resolved = { }
+   for key, value in pairs(expected) do
+      resolved[key] = resolver.matcher(value, matchers)
+   end
+   return resolved
+end
+
+function resolver.array(expected, matchers)
+   local resolved = { }
+   for index = 1, #expected do
+      resolved[index] = resolver.matcher(expected[index], matchers)
+   end
+   return resolved
 end
 
 return resolver

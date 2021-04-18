@@ -18,7 +18,7 @@ local DEFAULT_MATCHERS = {
 }
 
 function matcher_combinators.matcher(expected, default_matchers)
-   return resolver.resolve(expected, default_matchers or DEFAULT_MATCHERS)
+   return resolver.matcher(expected, default_matchers or DEFAULT_MATCHERS)
 end
 
 function matcher_combinators.match(expected, actual, default_matchers)
@@ -31,4 +31,3 @@ function matcher_combinators.match(expected, actual, default_matchers)
 end
 
 return matcher_combinators
-

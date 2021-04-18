@@ -1,17 +1,8 @@
 local base = require("matcher_combinators.matchers.base")
 local value = require("matcher_combinators.matchers.value")
+local resolver = require("matcher_combinators.resolver")
 
 local utils = require("matcher_combinators.utils")
-
-local function resolve(expected)
-   return function(resolverfn)
-      local resolved = { }
-      for index = 1, #expected do
-         resolved[index] = resolverfn(expected[index])
-      end
-      return resolved
-   end
-end
 
 local function element(matcher, actual)
    if not matcher then
@@ -93,7 +84,7 @@ local array = {}
 function array.equals(expected)
    return base.matcher(equals, {
       expected = expected,
-      resolver = resolve(expected),
+      resolver = resolver.array,
       name     = "array.equals",
    })
 end
@@ -101,7 +92,7 @@ end
 function array.starts_with(expected)
    return base.matcher(starts_with, {
       expected = expected,
-      resolver = resolve(expected),
+      resolver = resolver.array,
       name     = "array.starts_with",
    })
 end

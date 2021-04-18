@@ -26,9 +26,16 @@ function utils.is_array(value)
    return true
 end
 
+local function is_empty(tbl)
+   return next(tbl) == nil
+end
+
 function utils.is_table(value)
-   return type(value) == 'table'
-      and (next(value) == nil or not (utils.is_matcher(value) or utils.is_array(value)))
+   if type(value) ~= 'table' or utils.is_matcher(value) then
+      return false
+   end
+
+   return is_empty(value) or not utils.is_array(value)
 end
 
 return utils
