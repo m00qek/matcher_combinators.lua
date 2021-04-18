@@ -6,7 +6,7 @@ function utils.is_matcher(value)
    end
 
    local meta = getmetatable(value) or {}
-   return meta.__kind == 'matcher_combinators/matcher'
+   return meta.kind == 'matcher_combinators/matcher'
 end
 
 function utils.is_array(value)

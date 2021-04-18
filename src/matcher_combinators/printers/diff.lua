@@ -24,7 +24,7 @@ pprint_failure = function(failure, options)
       end))
    end
 
-   return table.pprint(failure, options, false, function(k, v, _)
+   return table.pprint(failure, options, true, function(k, v, _)
       if k == 'expected' then
          return
             table.pprint_key(k:upper()),

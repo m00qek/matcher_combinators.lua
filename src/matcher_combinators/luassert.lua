@@ -24,7 +24,7 @@ assert:register(
 
 assert:add_formatter(function(object)
    if not value.is_match(object) then
-      return diff.pprint(object)
+      --return diff.pprint(object)
    end
 end)
 

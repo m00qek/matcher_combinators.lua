@@ -1,4 +1,3 @@
-local value = require("matcher_combinators.matchers.value")
 local matchers = require("matcher_combinators.matchers")
 
 local function match(matcher, object)

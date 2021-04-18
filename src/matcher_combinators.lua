@@ -4,6 +4,7 @@ local number = require("matcher_combinators.matchers.number")
 local string = require("matcher_combinators.matchers.string")
 local table = require("matcher_combinators.matchers.table")
 local value = require("matcher_combinators.matchers.value")
+local base = require("matcher_combinators.matchers.base")
 
 local utils = require("matcher_combinators.utils")
 
@@ -35,11 +36,17 @@ local function resolve(object, matchers)
    end
 
    if utils.is_matcher(object) then
-      return object
+      return base.resolve(object, function(obj)
+         return resolve(obj, matchers)
+      end)
    end
 
    local matcher = matchers[type(object)]
-   return matcher(object)
+   if matcher then
+      return matcher(object)
+   end
+
+   return base.equals('general_equals', object)
 end
 
 function matcher_combinators.matcher(expected, default_matchers)
@@ -56,3 +63,4 @@ function matcher_combinators.match(expected, actual, default_matchers)
 end
 
 return matcher_combinators
+
