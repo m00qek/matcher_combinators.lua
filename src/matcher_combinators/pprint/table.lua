@@ -1,5 +1,5 @@
-local indent = require('matcher_combinators.printers.indent')
-local opts = require('matcher_combinators.printers.options')
+local indent = require('matcher_combinators.pprint.indent')
+local opts = require('matcher_combinators.pprint.options')
 
 local tbl = {}
 

@@ -1,8 +1,8 @@
 local value = require('matcher_combinators.matchers.value')
-local colors = require('matcher_combinators.printers.colors')
-local indent = require('matcher_combinators.printers.indent')
-local table = require('matcher_combinators.printers.table')
-local opts = require('matcher_combinators.printers.options')
+local colors = require('matcher_combinators.pprint.colors')
+local indent = require('matcher_combinators.pprint.indent')
+local table = require('matcher_combinators.pprint.table')
+local opts = require('matcher_combinators.pprint.options')
 local utils = require('matcher_combinators.utils')
 
 local diff = {}

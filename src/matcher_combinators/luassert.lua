@@ -1,5 +1,5 @@
 local matcher_combinators = require('matcher_combinators')
-local diff = require('matcher_combinators.printers.diff')
+local pprint = require('matcher_combinators.pprint')
 local value = require('matcher_combinators.matchers.value')
 
 local assert = require("luassert")
@@ -24,7 +24,7 @@ assert:register(
 
 assert:add_formatter(function(object)
    if not value.is_match(object) then
-      --return diff.pprint(object)
+      return pprint.diff(object)
    end
 end)
 

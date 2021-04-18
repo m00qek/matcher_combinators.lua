@@ -1,4 +1,4 @@
-local indent = require('matcher_combinators.printers.indent')
+local indent = require('matcher_combinators.pprint.indent')
 
 local opts = {}
 
