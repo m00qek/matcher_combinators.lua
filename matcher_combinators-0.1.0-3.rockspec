@@ -4,28 +4,34 @@ version = "0.1.0-3"
 rockspec_format = "3.0"
 
 source = {
-   url = "https://github.com/m00qek/matcher_combinators.lua"
+   url = "git://github.com/m00qek/matcher_combinators.lua",
+   tag = "v0.1.0"
 }
+
 description = {
    homepage = "https://github.com/m00qek/matcher_combinators.lua",
    summary = "Test library for asserting deeply nested data structures",
    labels = { "test", "assert" },
    license = "MIT"
 }
+
 dependencies = {
    "lua >= 5.1"
 }
+
 test_dependencies = {
     "busted",
     "luacheck"
 }
+
 test = {
    type = "busted"
 }
+
 build = {
-   type = "builtin",
+   type = 'builtin',
    modules = {
---      ["matcher_combinators"]                  = "src/matcher_combinators.lua",
+      ["matcher_combinators"]                  = "src/matcher_combinators.lua",
 
       ["matcher_combinators.matchers"]         = "src/matcher_combinators/matchers.lua",
       ["matcher_combinators.matchers.boolean"] = "src/matcher_combinators/matchers/boolean.lua",
