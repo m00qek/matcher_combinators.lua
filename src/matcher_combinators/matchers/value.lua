@@ -2,8 +2,8 @@ local v = {}
 
 local KEYS = {
    with_failures = 'matcher_combinators/with_failures',
-   failure    = 'matcher_combinators/failure',
-   keep       = 'matcher_combinators/keep',
+   failure       = 'matcher_combinators/failure',
+   keep          = 'matcher_combinators/keep',
 }
 
 function v.failure(value)
