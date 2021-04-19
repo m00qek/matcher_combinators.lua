@@ -1,0 +1,52 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    name: Test using Lua
+    strategy:
+      fail-fast: false
+      matrix:
+        version: ["5.4", "5.3", "5.2", "5.1", "luajit", "luajit-openresty"]
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v2
+
+    - name: Setup ‘lua’
+      uses: leafo/gh-actions-lua@v8
+      with:
+        luaVersion: "5.1.5"
+
+    - name: Setup ‘luarocks’
+      uses: leafo/gh-actions-luarocks@v4
+
+    - name: Cache Lua machinery
+      uses: actions/cache@v2
+      with:
+        path: |
+          .install
+          .lua
+          .luarocks
+        key: lua-${{ matrix.version }}-${{ hashFiles('*.rockspec') }}
+
+    - name: Install dependencies
+      # This is a *hack* to install all runtime/test deps without running the
+      # tests. The idea is to have a better output when there is some error
+      # on dependency installation
+      run: |
+        luarocks install luacheck
+        luarocks test -- --version
+
+    - name: Run linter
+      run: luacheck src/ spec/
+
+    - name: Run tests
+      run: luarocks test
