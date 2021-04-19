@@ -28,10 +28,10 @@ describe("asserting data structures", function()
          c = { x = "X", y = "Y" },
          d = predicate(function(actual) return actual >= 0 end),
       }, {
-         a = { 11, 15, 13 }, 
-         b = 3, 
-         c = { x = "X", z = "Z" },
-         d = 0 
+         a = { 11, 12, 13 },
+         b = 2,
+         c = { x = "X", y = "Y", z = "Z" },
+         d = 1
       })
    end)
 end)
