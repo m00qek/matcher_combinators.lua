@@ -28,5 +28,5 @@ assert:add_formatter(function(object)
    end
 end)
 
-say:set("assertion.combinators.match.positive", "Values didn't match!\n%s")
-say:set("assertion.combinators.match.negative", "Values matched!\n%s")
+say:set("assertion.combinators.match.positive", "Values didn't match!\n\n%s")
+say:set("assertion.combinators.match.negative", "Values matched!\n\n%s")
