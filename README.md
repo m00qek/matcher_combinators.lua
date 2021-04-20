@@ -1,6 +1,7 @@
 matcher_combinators.lua
 ===
-[![Continuous Integration][ci]][ciruns]
+[![Integration][integration-badge]][integration-runs]
+[![LuaRocks][luarocks-badge]][luarocks-packages]
 
 Test library for asserting deeply nested data structures
 
@@ -88,5 +89,11 @@ end, { name = 'number.is_natural' })
 [luarocks]: https://luarocks.org/
 [failure]: ./failure.png
 [mc]: https://github.com/nubank/matcher-combinators
+
 [ci]: https://github.com/m00qek/matcher_combinators.lua/actions/workflows/ci.yaml/badge.svg
 [ciruns]: https://github.com/m00qek/matcher_combinators.lua/actions/workflows/ci.yaml
+
+[integration-badge]: https://github.com/m00qek/matcher_combinators.lua/actions/workflows/integration.yml/badge.svg
+[integration-runs]: https://github.com/m00qek/matcher_combinators.lua/actions/workflows/integration.yml
+[luarocks-badge]: https://img.shields.io/luarocks/v/m00qek/matcher_combinators?style=plastic
+[luarocks-packages]: https://luarocks.org/modules/m00qek/matcher_combinators
