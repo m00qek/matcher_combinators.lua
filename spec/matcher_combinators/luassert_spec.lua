@@ -10,7 +10,7 @@ describe("assertions", function()
 
    it("nested", function()
       assert.combinators.match({
-         a = array.starts_with({ 11, 19 }),
+         a = array.starts_with({ 11, 12 }),
          b = 2,
          c = { x = "X", y = "Y" },
          d = matchers.predicate(function(actual) return actual >= 0 end),
