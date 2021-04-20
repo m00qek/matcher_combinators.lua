@@ -1,13 +1,6 @@
 local colors = {}
 
-local function isWindows()
-  return type(package) == 'table' and type(package.config) == 'string' and package.config:sub(1,1) == '\\'
-end
-
-local supported = not isWindows()
-if isWindows() then
-   supported = os.getenv("ANSICON")
-end
+local supported = package.config:sub(1,1) ~= '\\' or os.getenv("ANSICON")
 
 function colors.red(text)
    if supported then
