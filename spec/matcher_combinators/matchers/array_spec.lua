@@ -1,4 +1,5 @@
 local array = require('matcher_combinators.matchers.array')
+local boolean = require('matcher_combinators.matchers.boolean')
 local number = require('matcher_combinators.matchers.number')
 local value = require('matcher_combinators.matchers.value')
 
@@ -10,6 +11,7 @@ end
 assert:set_parameter("TableFormatLevel", -1)
 
 local n = number.equals
+local b = boolean.equals
 
 local keep = value.keep
 local missing = value.missing
@@ -23,6 +25,11 @@ describe("[equals]", function()
       assert.are.same(
          array.equals({ n(1), n(2) })("something"),
          mismatch({ n(1), n(2) }, "something"))
+   end)
+
+   it("knows how to handle 'false' value", function()
+      local a = { false, 1 }
+      assert.are.same(a, array.equals({ b(false), n(1) })(a))
    end)
 
    it("when values are equals", function()

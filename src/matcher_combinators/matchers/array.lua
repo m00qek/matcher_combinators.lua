@@ -5,11 +5,11 @@ local resolver = require("matcher_combinators.resolver")
 local utils = require("matcher_combinators.utils")
 
 local function element(matcher, actual)
-   if not matcher then
+   if matcher == nil then
       return value.unexpected(actual)
    end
 
-   if not actual then
+   if actual == nil then
       return value.missing(matcher)
    end
 

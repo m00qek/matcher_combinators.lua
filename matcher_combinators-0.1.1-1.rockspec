@@ -1,11 +1,11 @@
 package = "matcher_combinators"
-version = "0.1.0-3"
+version = "0.1.1-1"
 
 rockspec_format = "3.0"
 
 source = {
    url = "git://github.com/m00qek/matcher_combinators.lua",
-   tag = "v0.1.0"
+   tag = "v0.1.1"
 }
 
 description = {
