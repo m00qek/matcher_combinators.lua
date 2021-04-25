@@ -19,7 +19,6 @@ local unexpected = value.unexpected
 local mismatch = value.mismatch
 local with_failures = value.with_failures
 
-
 describe("[equals]", function()
    it("when trying to compare to a value that is not an array", function()
       assert.are.same(
@@ -120,5 +119,21 @@ describe("[starts_with]", function()
       assert.are.same(
          with_failures({ keep(1), mismatch(2, 9) }),
          matcher({ 1, 9 }))
+   end)
+end)
+
+describe("[empty]", function()
+   it("when comparing against a non array value", function()
+      assert.are.same(mismatch({}, 1), array.empty()(1))
+   end)
+
+   it("when array is empty", function()
+      assert.are.same({}, array.empty()({}))
+   end)
+
+   it("when array is not empty", function()
+      assert.are.same(
+         with_failures({ unexpected(1), unexpected(2) }),
+         array.empty()({ 1, 2 }))
    end)
 end)

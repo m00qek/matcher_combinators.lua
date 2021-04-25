@@ -53,3 +53,19 @@ describe("[contains]", function()
          with_failures({ a = 1, b = unexpected(2) }))
    end)
 end)
+
+describe("[empty]", function()
+   it("when comparing against a non table value", function()
+      assert.are.same(mismatch({}, 1), table.empty()(1))
+   end)
+
+   it("when table is empty", function()
+      assert.are.same({}, table.empty()({}))
+   end)
+
+   it("when table is not empty", function()
+      assert.are.same(
+         with_failures({ a = unexpected(1), b = unexpected(2) }),
+         table.empty()({ a = 1, b = 2 }))
+   end)
+end)

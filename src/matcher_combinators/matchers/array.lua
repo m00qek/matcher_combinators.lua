@@ -16,6 +16,23 @@ local function element(matcher, actual)
    return matcher(actual)
 end
 
+local function empty(actual)
+   if not utils.is_array(actual) then
+      return value.mismatch({ }, actual)
+   end
+
+   if #actual == 0 then
+      return actual
+   end
+
+   local mismatched = {}
+   for _, item in ipairs(actual) do
+      table.insert(mismatched, value.unexpected(item))
+   end
+
+   return value.with_failures(mismatched)
+end
+
 local function equals(actual, expected)
    local newarray = {}
    local matched = true
@@ -80,6 +97,10 @@ local function starts_with(actual, expected)
 end
 
 local array = {}
+
+function array.empty()
+   return base.matcher(empty, { name = "array.empty" })
+end
 
 function array.equals(expected)
    return base.matcher(equals, {

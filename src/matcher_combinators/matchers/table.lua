@@ -16,6 +16,25 @@ local function entry(matcher, actual)
    return matcher(actual)
 end
 
+local function empty(actual)
+   if not utils.is_table(actual) then
+      return value.mismatch({ }, actual)
+   end
+
+   local matched = true
+   local newtable = {}
+   for k, v in pairs(actual) do
+      matched = false
+      newtable[k] = value.unexpected(v)
+   end
+
+   if matched then
+      return actual
+   end
+
+   return value.with_failures(newtable)
+end
+
 local function contains(actual, expected)
    local newtable = { }
 
@@ -37,6 +56,10 @@ local function contains(actual, expected)
 end
 
 local tbl = {}
+
+function tbl.empty()
+   return base.matcher(empty, { name = "table.empty" })
+end
 
 function tbl.contains(expected)
    return base.matcher(contains, {
