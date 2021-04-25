@@ -33,13 +33,41 @@ local function empty(actual)
    return value.with_failures(mismatched)
 end
 
-local function equals(actual, expected)
-   local newarray = {}
-   local matched = true
-
+local function contains(actual, expected)
    if not utils.is_array(actual) then
       return value.mismatch(expected, actual)
    end
+
+   local newarray = {}
+   for _, matcher in ipairs(expected) do
+      local matched = false
+
+      for _, item in ipairs(actual) do
+         if value.is_match(matcher(item)) then
+            matched = true
+            break
+         end
+      end
+
+      if not matched then
+         table.insert(newarray, value.missing(matcher))
+      end
+   end
+
+   if #newarray > 0 then
+      return value.with_failures(newarray)
+   end
+
+   return actual
+end
+
+local function equals(actual, expected)
+   if not utils.is_array(actual) then
+      return value.mismatch(expected, actual)
+   end
+
+   local newarray = {}
+   local matched = true
 
    local index = 1
    while index <= #expected do
@@ -100,6 +128,14 @@ local array = {}
 
 function array.empty()
    return base.matcher(empty, { name = "array.empty" })
+end
+
+function array.contains(expected)
+   return base.matcher(contains, {
+      expected = expected,
+      resolver = resolver.array,
+      name     = "array.contains",
+   })
 end
 
 function array.equals(expected)

@@ -137,3 +137,29 @@ describe("[empty]", function()
          array.empty()({ 1, 2 }))
    end)
 end)
+
+describe("[contains]", function()
+   it("when comparing against a non array value", function()
+      assert.are.same(mismatch({ n(1) }, 1), array.contains({ n(1) })(1))
+   end)
+
+   it("when expected is empty", function()
+      assert.are.same({ 1, 2 }, array.contains({ })({ 1, 2 }))
+   end)
+
+   it("when actual is empty", function()
+      assert.are.same(
+         with_failures({ missing(n(1)) }),
+         array.contains({ n(1) })({ }))
+   end)
+
+   it("when actual does not contain all expected values", function()
+      assert.are.same(
+         with_failures({ missing(n(1)) }),
+         array.contains({ n(1), n(2) })({ 2, 3 }))
+   end)
+
+   it("when actual contains all expected values", function()
+      assert.are.same({ 2, 1 }, array.contains({ n(1) })({ 2, 1 }))
+   end)
+end)
