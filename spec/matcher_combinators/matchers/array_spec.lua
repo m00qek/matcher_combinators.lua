@@ -122,6 +122,41 @@ describe("[starts_with]", function()
    end)
 end)
 
+describe("[ends_with]", function()
+   it("when actual is equal expected", function()
+      assert_success(array.ends_with({ n(8), n(9) }), { 8, 9 })
+   end)
+
+
+   it("when actual ends_with expected", function()
+      assert_success(array.ends_with({ n(8), n(9) }), { 5, 6, 7, 8, 9 })
+   end)
+
+   local matcher = array.ends_with({ n(8), n(9) })
+
+   it("when it has missing values", function()
+      assert.are.same(
+         with_failures({ missing(n(8)), keep(9) }),
+         matcher({ 9 }))
+   end)
+
+   it("when it has mismatched values", function()
+      assert.are.same(
+         with_failures({ keep(8), mismatch(9, 2) }),
+         matcher({ 8, 2 }))
+
+      assert.are.same(
+         with_failures({ mismatch(8, 1), keep(9) }),
+         matcher({ 7, 1, 9 }))
+   end)
+
+   it("when it has multiple failure types", function()
+      assert.are.same(
+         with_failures({ missing(n(8)), mismatch(9, 1) }),
+         matcher({ 1 }))
+   end)
+end)
+
 describe("[empty]", function()
    it("when comparing against a non array value", function()
       assert.are.same(mismatch({}, 1), array.empty()(1))

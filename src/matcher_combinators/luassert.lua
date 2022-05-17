@@ -22,11 +22,11 @@ assert:register(
    "assertion.combinators.match.positive",
    "assertion.combinators.match.negative")
 
-assert:add_formatter(function(object)
-   if not value.is_match(object) then
-      return pprint.diff(object)
-   end
-end)
+--assert:add_formatter(function(object)
+--   if not value.is_match(object) then
+--      return pprint.diff(object)
+--   end
+--end)
 
 say:set("assertion.combinators.match.positive", "Values didn't match!\n\n%s")
 say:set("assertion.combinators.match.negative", "Values matched!\n\n%s")

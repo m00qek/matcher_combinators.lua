@@ -38,4 +38,16 @@ function utils.is_table(value)
    return is_empty(value) or not utils.is_array(value)
 end
 
+
+function utils.reverse(array)
+   local reversed = {}
+   local count = #array
+
+   for k, v in ipairs(array) do
+      reversed[count + 1 - k] = v
+   end
+
+   return reversed
+end
+
 return utils

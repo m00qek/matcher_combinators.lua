@@ -124,6 +124,34 @@ local function starts_with(actual, expected)
    return actual
 end
 
+local function ends_with(actual, expected)
+   local newarray = {}
+   local matched = true
+
+   if not utils.is_array(actual) then
+      return value.mismatch(expected, actual)
+   end
+
+   for index = 1, #expected do
+      local object = element(
+         expected[#expected - index + 1],
+         actual[#actual - index + 1])
+
+      newarray[index] = object
+      if value.is_match(object) then
+         newarray[index] = value.keep(object)
+      end
+
+      matched = matched and value.is_match(object)
+   end
+
+   if not matched then
+      return value.with_failures(utils.reverse(newarray))
+   end
+
+   return actual
+end
+
 local array = {}
 
 function array.empty()
@@ -143,6 +171,14 @@ function array.equals(expected)
       expected = expected,
       resolver = resolver.array,
       name     = "array.equals",
+   })
+end
+
+function array.ends_with(expected)
+   return base.matcher(ends_with, {
+      expected = expected,
+      resolver = resolver.array,
+      name     = "array.ends_with",
    })
 end
 
