@@ -1,5 +1,5 @@
 local value = require('matcher_combinators.matchers.value')
-local colors = require('matcher_combinators.pprint.colors')
+local xterm = require('matcher_combinators.pprint.xterm')
 local indent = require('matcher_combinators.pprint.indent')
 local table = require('matcher_combinators.pprint.table')
 local opts = require('matcher_combinators.pprint.options')
@@ -17,23 +17,26 @@ pprint_failure = function(failure, options)
    })
 
    if failure.missing or failure.unexpected then
-      return colors.red(table.pprint(failure, failure_options, true, function(k, v, _)
+      return xterm.format({ xterm.colors.red }, table.pprint(failure, failure_options, true, function(k, v, _)
          return
+         xterm.format(
+            { xterm.style.bold, xterm.style.italic },
             table.pprint_key(k:upper()),
-            pprint_value(v, failure_options)
+            { xterm.style.reset, xterm.colors.red }),
+         pprint_value(v, failure_options)
       end))
    end
 
    return table.pprint(failure, options, true, function(k, v, _)
       if k == 'expected' then
          return
-            table.pprint_key(k:upper()),
-            colors.yellow(pprint_value(v, failure_options))
+         xterm.format({ xterm.style.bold, xterm.style.italic }, table.pprint_key(k:upper())),
+         xterm.format({ xterm.colors.yellow }, pprint_value(v, failure_options))
       end
 
       return
-         table.pprint_key(k:upper()),
-         colors.red(pprint_value(v, failure_options))
+      xterm.format({ xterm.style.bold, xterm.style.italic }, table.pprint_key(k:upper())),
+      xterm.format({ xterm.colors.red }, pprint_value(v, failure_options))
    end)
 end
 

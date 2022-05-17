@@ -18,6 +18,7 @@ describe("assertions", function()
       { a = { 11, 12, 13 }, b = 2, c = { x = "X", y = "Y" , z = "Z" }, d = 1 })
    end)
 end)
+
 local predicate = require("matcher_combinators.matchers").predicate
 
 describe("asserting data structures", function()

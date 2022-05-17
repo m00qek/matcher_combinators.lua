@@ -45,7 +45,7 @@ build = {
       ["matcher_combinators.pprint"]           = "src/matcher_combinators/pprint.lua",
       ["matcher_combinators.pprint.options"]   = "src/matcher_combinators/pprint/options.lua",
       ["matcher_combinators.pprint.printer"]   = "src/matcher_combinators/pprint/printer.lua",
-      ["matcher_combinators.pprint.colors"]    = "src/matcher_combinators/pprint/colors.lua",
+      ["matcher_combinators.pprint.xterm"]     = "src/matcher_combinators/pprint/xterm.lua",
       ["matcher_combinators.pprint.indent"]    = "src/matcher_combinators/pprint/indent.lua",
       ["matcher_combinators.pprint.table"]     = "src/matcher_combinators/pprint/table.lua",
 
